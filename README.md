@@ -9,8 +9,16 @@ This information contained on this notebook and the resources avaiable for dowlo
 # Results from the Prophet prediction
 * Example of Stock Price Prediction
 
+```
+test_ticker.predict(365)
+```
+
 ![](image/stock_price_prediction.png)
 
 * Example of Stock Trend Analysis
+
+```
+test_ticker.trend_analizer(365)
+```
 
 ![](image/Porphet_Trend_analysis.png)
