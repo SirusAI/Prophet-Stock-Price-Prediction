@@ -1,2 +1,8 @@
 # Prophet-Stock-Price-Prediction
-I developed this tool mainly to gain more experience in time series analysis and object-oriented programming.
+Prophet Stock Price Prediction
+This information contained on this notebook and the resources avaiable for dowload through this website is not intended as, and shall not be understood or contruced as, financial advice!I developed this tool mainly to gain more experience in time series analysis and object-oriented programming. I will occasionally update this project by adding more fuctions.
+# Libraries for the project
+pandas
+datetime
+[prophet](https://facebook.github.io/prophet/docs/quick_start.html#python-api)
+# Results from the tool
