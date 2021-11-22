@@ -6,5 +6,10 @@ This information contained on this notebook and the resources avaiable for dowlo
 * [Datetime](https://docs.python.org/3/library/datetime.html)
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
 # Results from the Prophet prediction
-* Stock Price Prediction - SPY 
-![](images/stock_price_prediction.png)
+* Example of Stock Price Prediction
+
+![](image/stock_price_prediction.png)
+
+* Example of Stock Trend Analysis
+
+![](image/Porphet_Trend_analysis.png)
