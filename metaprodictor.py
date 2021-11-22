@@ -6,7 +6,7 @@ from prophet import Prophet
 start = datetime.datetime(2010, 1, 1)
 end = datetime.datetime.today().strftime('%Y-%m-%d')
 
-class prodictor:
+class Prodictor:
     def __init__ (self, ticker):
 
         ticker = ticker.upper()
