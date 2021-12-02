@@ -72,3 +72,25 @@ class Corranalyzer:
         self.corr = corr.copy()
         
         return corr.style.applymap(lambda x: 'background-color : orange' if x>highlight and x!=1 else '')
+
+    # Ranking risk / mean return of the sotcks list
+    def riskRank(self):
+        plt.figure(figsize=(20,10),dpi = 75)
+        plt.scatter(self.pct_return.mean(), self.pct_return.std())
+        plt.xlabel('Expected returns')
+        plt.ylabel('Risk')
+        for label, x, y in zip(self.pct_return.columns, self.pct_return.mean(), self.pct_return.std()):
+            plt.annotate(
+                label, 
+                xy = (x, y), xytext = (20, -20),
+                textcoords = 'offset points', ha = 'right', va = 'bottom',
+                bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),
+                arrowprops = dict(arrowstyle = '->', connectionstyle = 'arc3,rad=0'))
+
+        risk_ranking = sorted(self.pct_return.std().items(), key=lambda item: item[1],reverse=True)
+        risk_ranking = pd.DataFrame(risk_ranking,columns=['Tickers', 'Risk'])
+        return_ranking = sorted(self.pct_return.mean().items(), key=lambda item: item[1],reverse=True)
+        return_ranking = pd.DataFrame(return_ranking, columns=['Tickers', 'MeanReturn'])
+
+        print('Ranking: ')
+        display(risk_ranking, return_ranking)
