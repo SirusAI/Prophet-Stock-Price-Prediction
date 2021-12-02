@@ -59,7 +59,7 @@ class Corranalyzer:
         else:
             print ("need more input")
         
-    def mitrixCorrl (self,highlight):
+    def matrixCorrl (self,highlight):
         
         highlight = highlight
         
