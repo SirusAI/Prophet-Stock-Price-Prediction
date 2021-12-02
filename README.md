@@ -34,7 +34,7 @@ test_ticker.trend_analizer(365)
 from metaprodictor import Corranalyzer
 
 ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
-highlight = 0.78
+highlight = 0.78 # highlight if correlation is greater than 0.78
 
 b = Corranalyzer(ticker_group)
 b.matrixCorrl(highlight)
