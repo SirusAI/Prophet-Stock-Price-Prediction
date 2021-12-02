@@ -37,6 +37,6 @@ ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
 highlight = 0.78
 
 b = Corranalyzer(ticker_group)
-b.matrixCorrl()
+b.matrixCorrl(highlight)
 ```
 ![](image/CORRELATION.png)
