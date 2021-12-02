@@ -28,3 +28,15 @@ test_ticker.trend_analizer(365)
 ```
 
 ![](image/Porphet_Trend_analysis.png)
+
+* Example of Stocks Daily Return Correlation Analysis
+```
+from metaprodictor import Corranalyzer
+
+ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
+highlight = 0.78
+
+b = Corranalyzer(ticker_group)
+b.mitrixCorrl()
+```
+![](image/CORRELATION.png)
