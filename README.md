@@ -6,11 +6,17 @@ This information contained on this notebook and the resources avaiable for dowlo
 * [Pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest)
 * [Datetime](https://docs.python.org/3/library/datetime.html)
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
+* [Matplotlib](https://matplotlib.org)
 # Results from the Prophet prediction
 * Example of Stock Price Prediction
 
 ```
-test_ticker.predict(365)
+from metaprodictor import Prodictor
+
+ticker = 'spy' 
+days = 365 
+test_ticker = Prodictor(ticker) 
+test_ticker.predict(days)
 ```
 
 ![](image/stock_price_prediction.png)
