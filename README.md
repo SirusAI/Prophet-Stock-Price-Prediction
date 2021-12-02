@@ -29,7 +29,7 @@ test_ticker.trend_analizer(365)
 
 ![](image/Porphet_Trend_analysis.png)
 
-* Example of Stocks Daily Return Correlation Analysis
+* Example of Stocks Daily Return Correlation Matrix
 ```
 from metaprodictor import Corranalyzer
 
