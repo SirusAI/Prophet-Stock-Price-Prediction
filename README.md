@@ -40,3 +40,10 @@ b = Corranalyzer(ticker_group)
 b.matrixCorrl(highlight)
 ```
 ![](image/CORRELATION.png)
+
+* Example of Stocks Daily Return Risk/Return Chart
+```
+b.riskRank()
+```
+![](image/risk.png) ![](image/mean.png)
+![](image/ranking.png)
