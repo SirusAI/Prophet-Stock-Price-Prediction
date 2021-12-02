@@ -45,5 +45,5 @@ b.matrixCorrl(highlight)
 ```
 b.riskRank()
 ```
-![](image/risk.png) ![](image/mean.png)
+![](image/risk.png)
 ![](image/ranking.png)
