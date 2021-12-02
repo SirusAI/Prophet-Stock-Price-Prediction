@@ -48,3 +48,27 @@ class Prodictor:
         forecast = p.predict(future)
 
         fig_b = p.plot_components(forecast)
+class Corranalyzer:
+    
+    def __init__(self, tickers):
+        
+        self.tickers = tickers
+        
+        if len(self.tickers) > 1:
+            self.tickers = tickers
+        else:
+            print ("need more input")
+        
+    def mitrixCorrl (self,highlight):
+        
+        highlight = highlight
+        
+        datacomp = web.DataReader(self.tickers,'yahoo', start = start, end = end)['Adj Close']
+        
+        pct_return = datacomp.pct_change()
+                
+        corr = pct_return.corr()
+        
+        self.corr = corr.copy()
+        
+        return corr.style.applymap(lambda x: 'background-color : orange' if x>highlight and x!=1 else '')
