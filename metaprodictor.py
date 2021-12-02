@@ -87,10 +87,13 @@ class Corranalyzer:
                 bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),
                 arrowprops = dict(arrowstyle = '->', connectionstyle = 'arc3,rad=0'))
 
+        n = len(self.pct_return)
         risk_ranking = sorted(self.pct_return.std().items(), key=lambda item: item[1],reverse=True)
         risk_ranking = pd.DataFrame(risk_ranking,columns=['Tickers', 'Risk'])
         return_ranking = sorted(self.pct_return.mean().items(), key=lambda item: item[1],reverse=True)
         return_ranking = pd.DataFrame(return_ranking, columns=['Tickers', 'MeanReturn'])
-
+        sd = risk_ranking['Risk']/(n**0.5)
+        return_ranking['SD_Error'] = sd
+        ranking = pd.DataFrame.merge(risk_ranking,return_ranking)
         print('Ranking: ')
-        display(risk_ranking, return_ranking)
+        display(ranking)
