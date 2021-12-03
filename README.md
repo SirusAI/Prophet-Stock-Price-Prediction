@@ -52,11 +52,11 @@ test_ticker.cTc_return()
 
 ![](image/closetoclosechart.png)
 
-### Example of Stocks Daily Return Correlation Matrix
+### Example of Stocks Daily Return Correlation Matrix for Energy Stocks
 ```
 from metaprodictor import Corranalyzer
 
-ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
+ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO'] #Put your stocks here
 highlight = 0.78 # highlight if correlation is greater than 0.78
 
 b = Corranalyzer(ticker_group)
