@@ -85,7 +85,7 @@ class Prodictor:
         sd = new_df.std(axis = 0, skipna = True)[1]
         u_ban = mean + 1.96 * sd
         l_ban = mean - 1.96 * sd
-        data = {'Stats':['Standard_Deviation','Upper_Band','Mean','Lower_Band','Positive_Days','Negative_Days',
+        data = {'self.symbol':['Standard_Deviation','Upper_Band','Mean','Lower_Band','Positive_Days','Negative_Days',
                       'Total Days','Win_Rate','Losing_rate',
                       "Total_gains",'Total_losses','Edge'],
                 'Measurement':["{:.5%}".format(sd),"{:.5%}".format(u_ban),"{:.5%}".format(mean),"{:.5%}".format(l_ban),p,n,
