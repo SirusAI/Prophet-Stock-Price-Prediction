@@ -36,7 +36,7 @@ test_ticker.trend_analizer(365)
 ```
 test_ticker.daily_return()
 ```
-* Winning Rate = Dily_Return(>0)/total trading days; Total_gains = accumulate all positive % returns (Ideally, buy at opening, sell at closing)
+* Winning Rate = Daily_Return(>0)/total trading days; Total_gains = accumulate all positive % returns (close to close)
 
 ![](image/dailyreturnstats.png)
 
