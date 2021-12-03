@@ -8,7 +8,7 @@ This information contained on this notebook and the resources avaiable for dowlo
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
 * [Matplotlib](https://matplotlib.org)
 # Results from the Prophet prediction
-### Example of Stock Price Prediction
+## Single Stock Analysis
 
 ```
 from metaprodictor import Prodictor
@@ -16,12 +16,7 @@ from metaprodictor import Prodictor
 ticker = 'spy' 
 days = 365 
 test_ticker = Prodictor(ticker) 
-test_ticker.predict(days)
 ```
-* Prophet stock price prediction
-
-![](image/stock_price_prediction.png)
-
 ### Example of Stock Trend Analysis
 
 ```
@@ -31,18 +26,31 @@ test_ticker.trend_analizer(365)
 
 ![](image/Porphet_Trend_analysis.png)
 
-### Example of Stocks Daily Return Stats Analysis
+### Example of Stocks Open To Close Return Stats Analysis
 
 ```
-test_ticker.daily_return()
+test_ticker.oTc_return()
 ```
 * Winning Rate = Daily_Return(>0)/total trading days; Total_gains = accumulate all positive % returns (close to close)
 
-![](image/dailyreturnstats.png)
+![](image/opentoclosestat.png)
 
-* Daily Return (%) Chart
+* Open to Close Return (%) Chart
 
-![](image/dailyreturnstatschart.png)
+![](image/opentoclosechart.png)
+
+### Example of Stocks Close To Close Return Stats Analysis
+
+```
+test_ticker.cTc_return()
+```
+* Winning Rate = Daily_Return(>0)/total trading days; Total_gains = accumulate all positive % returns (close to close)
+
+![](image/closetoclosestat.png)
+
+* Close to Close Return (%) Chart
+
+![](image/closetoclosechart.png)
 
 ### Example of Stocks Daily Return Correlation Matrix
 ```
@@ -54,12 +62,13 @@ highlight = 0.78 # highlight if correlation is greater than 0.78
 b = Corranalyzer(ticker_group)
 b.matrixCorrl(highlight)
 ```
-
-* Correlation Matrix for Energy Stocks
+## Portfolio Analysis
+### Correlation Matrix for Energy Stocks
 
 ![](image/CORRELATION.png)
 
-### Example of Stocks Daily Return Risk/Return Chart
+
+### Daily Return Risk/Return Chart and Concise Summary of the Past Performance
 ```
 b.riskRank()
 ```
