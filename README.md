@@ -8,7 +8,7 @@ This information contained on this notebook and the resources avaiable for dowlo
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
 * [Matplotlib](https://matplotlib.org)
 # Results from the Prophet prediction
-* Example of Stock Price Prediction
+### Example of Stock Price Prediction
 
 ```
 from metaprodictor import Prodictor
@@ -18,18 +18,33 @@ days = 365
 test_ticker = Prodictor(ticker) 
 test_ticker.predict(days)
 ```
+* Prophet stock price prediction
 
 ![](image/stock_price_prediction.png)
 
-* Example of Stock Trend Analysis
+### Example of Stock Trend Analysis
 
 ```
 test_ticker.trend_analizer(365)
 ```
+* Seasonal Trend
 
 ![](image/Porphet_Trend_analysis.png)
 
-* Example of Stocks Daily Return Correlation Matrix
+### Example of Stocks Daily Return Stats Analysis
+
+```
+test_ticker.daily_return()
+```
+* Winning Rate = Dily_Return(>0)/total trading days; Total_gains = accumulate all positive % returns (Ideally, buy at opening, sell at closing)
+
+![](image/dailyreturnstats.png)
+
+* Daily Return (%) Chart
+
+![](image/dailyreturnstatschart.png)
+
+### Example of Stocks Daily Return Correlation Matrix
 ```
 from metaprodictor import Corranalyzer
 
@@ -39,11 +54,19 @@ highlight = 0.78 # highlight if correlation is greater than 0.78
 b = Corranalyzer(ticker_group)
 b.matrixCorrl(highlight)
 ```
+
+* Correlation Matrix for Energy Stocks
+
 ![](image/CORRELATION.png)
 
-* Example of Stocks Daily Return Risk/Return Chart
+### Example of Stocks Daily Return Risk/Return Chart
 ```
 b.riskRank()
 ```
+* Ranking from Highest Risk
+
 ![](image/riskc.png)
+
+* Risk VS Return
+
 ![](image/ranking.png)
