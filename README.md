@@ -76,6 +76,6 @@ b.riskRank()
 
 ![](image/riskc.png)
 
-* Risk VS Return
+* Risk VS Return (**Risk is Standard Deviation of the mean, Risk of 0.03564 = SD of 3.564%)
 
 ![](image/ranking.png)
