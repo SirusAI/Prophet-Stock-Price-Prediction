@@ -78,7 +78,7 @@ class Prodictor:
                 n = n + 1
                 total_losses = total_losses + x
         edge = 0
-        if total_gain > total_losses:
+        if total_gain > abs(total_losses):
             edge = 'Better Be a Buyer'
         else:
             edge = 'Better Be a Seller'
@@ -122,7 +122,7 @@ class Prodictor:
                 n = n + 1
                 total_losses = total_losses + x
         edge = 0
-        if total_gain > total_losses:
+        if total_gain > abs(total_losses):
             edge = 'Better Be a Buyer'
         else:
             edge = 'Better Be a Seller'
