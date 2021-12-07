@@ -53,6 +53,12 @@ test_ticker.cTc_return()
 ![](image/closetoclosechart.png)
 
 ### Example of Finding Out the Best Holding periods that gernerate the max profit within a year (252 trading days)
+```
+test_ticker.zTc_return(252)
+```
+![](image/bth.png)
+
+![](image/bthc.png)
 
 ### Example of Stocks Daily Return Correlation Matrix for Energy Stocks
 ```
