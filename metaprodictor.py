@@ -143,6 +143,64 @@ class Prodictor:
         d_return.plot(label = 'Close_To_Close_Return')
         return df.style.hide_index()
 
+    def zTc_return(self,days): # Close to Close %
+        days = days
+        mplt.rc('figure', figsize = (20, 7))
+        style.use('ggplot')
+        new_df = self.stock
+        a=[]
+        b=[]
+        for i in range(days):
+            b = new_df['y']/new_df['y'].shift(i+1) -1
+            c = b.iloc[1::i+1].mean()
+            d = b.iloc[1::i+1].std()
+            tuple = (i+1,c,d)
+            a.append(tuple)
+        a = sorted(a, key=lambda item: item[1],reverse=True)
+        optimized_number = [item[0] for item in a][0]
+        optimized_mean = [item[1] for item in a][0]
+        optimized_sd = [item[2] for item in a][0]
+#         return optimized_sd
+        mean = optimized_mean
+        sd = optimized_sd
+        u_ban = mean + 1.96 * sd
+        l_ban = mean - 1.96 * sd
+        
+        p = 0
+        total_gain = 0
+        d_return = new_df['y']/new_df['y'].shift(optimized_number) -1
+        
+        for i in d_return.iloc[1::optimized_number]:
+            if i > 0:
+                p = p + 1
+                total_gain = total_gain + i
+        n = 0
+        total_losses = 0
+        for x in d_return.iloc[1::optimized_number]:
+            if x < 0:
+                n = n + 1
+                total_losses = total_losses + x
+        edge = []
+        if total_gain > abs(total_losses):
+            edge = 'Better Be a Buyer'
+        else:
+            edge = 'Better Be a Seller'
+
+        c = d_return.iloc[1::optimized_number]
+        win_rate = p / len(c)
+        l_rate = n / len(c)       
+        data = {self.symbol:['Best Holiding Period(Trading Days)','Standard_Deviation','Upper_Band','Mean Return','Lower_Band',
+                             'Winning_Trades','Lossing_Trades',
+                      'Total_trade','Win_Rate','Losing_rate',
+                      "Total_gains",'Total_losses','PnL','Total_Trading_Days','Edge'],
+                'Best Trading Horizon':[optimized_number,"{:.5%}".format(sd),"{:.5%}".format(u_ban),"{:.5%}".format(mean),"{:.5%}".format(l_ban),p,n,
+                               len(c),"{:.2%}".format(win_rate),
+                               "{:.2%}".format(l_rate),total_gain,total_losses,total_gain+total_losses,len(new_df),edge]}
+        df = pd.DataFrame.from_dict(data)
+        bpp  = self.splot/self.splot.shift(optimized_number) -1
+        bpp.plot(label = 'Close_To_Close_Return')
+        return df.style.hide_index()   
+
 class Corranalyzer:
     
     def __init__(self, tickers):
