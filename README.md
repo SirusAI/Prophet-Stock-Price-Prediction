@@ -54,16 +54,7 @@ test_ticker.zTc_return(252)
 
 ![](image/bthc.png)
 
-### Example of Stocks Daily Return Correlation Matrix for Energy Stocks
-```
-from metaprodictor import Corranalyzer
 
-ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO'] #Put your stocks here
-highlight = 0.78 # highlight if correlation is greater than 0.78
-
-b = Corranalyzer(ticker_group)
-b.matrixCorrl(highlight)
-```
 ### Truning Point Analysis
 Apply Prophet and detects changepoints by first specifying a large number of potential changepoints at which the rate is allowed to change. It then puts a sparse prior on the magnitudes of the rate changes (equivalent to L1 regularization) - this essentially means that Prophet has a large number of possible places where the rate can change, but will use as few of them as possible. Consider the Peyton Manning forecast from the Quickstart. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series. The vertical lines in this figure indicate where the potential changepoints were placed: "https://facebook.github.io/prophet/docs/trend_changepoints.html" for detail
 ```
@@ -82,6 +73,17 @@ test_ticker.trend_analizer(365)
 ![](image/Porphet_Trend_analysis.png)
 
 ## For Portfolio Analysis
+
+### Example of Stocks Daily Return Correlation Matrix for Energy Stocks
+```
+from metaprodictor import Corranalyzer
+
+ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO'] #Put your stocks here
+highlight = 0.78 # highlight if correlation is greater than 0.78
+
+b = Corranalyzer(ticker_group)
+b.matrixCorrl(highlight)
+```
 ### Correlation Matrix for Energy Stocks
 
 ![](image/CORRELATION.png)
