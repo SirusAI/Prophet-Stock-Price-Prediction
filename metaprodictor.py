@@ -5,8 +5,10 @@ from prophet import Prophet
 import matplotlib.pyplot as plt
 from matplotlib import style
 import matplotlib as mplt
+import matplotlib
+import fbprophet
 
-start = datetime.datetime(2010, 1, 1)
+start = datetime.datetime(2005, 1, 1)
 end = datetime.datetime.today().strftime('%Y-%m-%d')
 
 class Prodictor:
@@ -31,6 +33,8 @@ class Prodictor:
         df_a.rename(columns={'Date':'ds',"Adj Close":'y'}, inplace=True)
         df_a = df_a[['ds','y']]
         self.stock = df_a.copy()
+        new_datas = stock.reset_index(level=0)
+        self.new_datas = new_datas
     
     def predict(self,days):
         
@@ -77,7 +81,7 @@ class Prodictor:
             if x < 0:
                 n = n + 1
                 total_losses = total_losses + x
-        edge = 0
+        edge = []
         if total_gain > abs(total_losses):
             edge = 'Better Be a Buyer'
         else:
@@ -86,14 +90,16 @@ class Prodictor:
         length = len(d_return)
         win_rate = p / length
         l_rate = n / length
-        
 
-        data = {self.symbol:['Standard_Deviation','Upper_Band','Mean','Lower_Band','Positive_Days','Negative_Days',
+        max_drawdown = d_return.min()
+        max_return = d_return.max()
+        data = {self.symbol:['Standard_Deviation','Upper_Band','Mean','Lower_Band','Max_drawdown','Max_gain','Positive_Days','Negative_Days',
                       'Total Days','Win_Rate','Losing_rate',
-                      "Total_gains",'Total_losses','Edge'],
-                'Open to Close Stats':["{:.5%}".format(sd),"{:.5%}".format(u_ban),"{:.5%}".format(mean),"{:.5%}".format(l_ban),p,n,
-                               len(d_return),"{:.2%}".format(win_rate),
-                               "{:.2%}".format(l_rate),total_gain,total_losses,edge]}
+                      'Total_gains','Total_losses','PnL','Edge'],
+                'Open to Close Stats':["{:.5%}".format(sd),'{:.5%}'.format(u_ban),'{:.5%}'.format(mean),'{:.5%}'.format(l_ban),
+                                       '{:.5%}'.format(max_drawdown),"{:.5%}".format(max_return),p,n,
+                               len(d_return),'{:.2%}'.format(win_rate),
+                               '{:.2%}'.format(l_rate),total_gain,total_losses,total_gain+total_losses,edge]}
         
         df = pd.DataFrame.from_dict(data)
         d_return.plot(label = 'Open_To_Close_Return')
@@ -121,28 +127,28 @@ class Prodictor:
             if x < 0:
                 n = n + 1
                 total_losses = total_losses + x
-        edge = 0
+        edge = []
         if total_gain > abs(total_losses):
             edge = 'Better Be a Buyer'
         else:
             edge = 'Better Be a Seller'
-        
         length = len(new_df)
         win_rate = p / (length -1)
         l_rate = n / (length - 1)
-        
-
-        data = {self.symbol:['Standard_Deviation','Upper_Band','Mean','Lower_Band','Positive_Days','Negative_Days',
+        max_drawdown = new_df['daily_return'].min()
+        max_return = new_df['daily_return'].max()
+        data = {self.symbol:['Standard_Deviation','Upper_Band','Mean','Lower_Band','Max_drawdown','Max_gain','Positive_Days','Negative_Days',
                       'Total Days','Win_Rate','Losing_rate',
-                      "Total_gains",'Total_losses','Edge'],
-                'Close To Close Stats':["{:.5%}".format(sd),"{:.5%}".format(u_ban),"{:.5%}".format(mean),"{:.5%}".format(l_ban),p,n,
-                               len(new_df)-1,"{:.2%}".format(win_rate),
-                               "{:.2%}".format(l_rate),total_gain,total_losses,edge]}
+                      'Total_gains','Total_losses','PnL','Edge'],
+                'Close To Close Stats':['{:.5%}'.format(sd),'{:.5%}'.format(u_ban),'{:.5%}'.format(mean),'{:.5%}'.format(l_ban),
+                                        '{:.5%}'.format(max_drawdown),'{:.5%}'.format(max_return),p,n,
+                               len(new_df)-1,'{:.2%}'.format(win_rate),
+                               '{:.2%}'.format(l_rate),total_gain,total_losses,total_gain+total_losses,edge]}
         
         df = pd.DataFrame.from_dict(data)
         d_return.plot(label = 'Close_To_Close_Return')
         return df.style.hide_index()
-
+    
     def zTc_return(self,days): # Close to Close %
         days = days
         mplt.rc('figure', figsize = (20, 7))
@@ -188,19 +194,129 @@ class Prodictor:
 
         c = d_return.iloc[1::optimized_number]
         win_rate = p / len(c)
-        l_rate = n / len(c)       
-        data = {self.symbol:['Best Holiding Period(Trading Days)','Standard_Deviation','Upper_Band','Mean Return','Lower_Band',
-                             'Winning_Trades','Lossing_Trades',
+        l_rate = n / len(c)
+        max_drawdown = c.min()
+        max_return = c.max()
+        data = {self.symbol:['Best Holiding Periods(Trading Days)','Standard_Deviation','Upper_Band','Mean Return','Lower_Band',
+                             'Max_drawdown','Max_gain','Winning_Trades','Lossing_Trades',
                       'Total_trade','Win_Rate','Losing_rate',
-                      "Total_gains",'Total_losses','PnL','Total_Trading_Days','Edge'],
-                'Best Trading Horizon':[optimized_number,"{:.5%}".format(sd),"{:.5%}".format(u_ban),"{:.5%}".format(mean),"{:.5%}".format(l_ban),p,n,
-                               len(c),"{:.2%}".format(win_rate),
-                               "{:.2%}".format(l_rate),total_gain,total_losses,total_gain+total_losses,len(new_df),edge]}
+                      'Total_gains','Total_losses','PnL','Total_Trading_Days','Edge'],
+                'Best Trading Horizon':[optimized_number,'{:.5%}'.format(sd),'{:.5%}'.format(u_ban),'{:.5%}'.format(mean),
+                                        '{:.5%}'.format(l_ban), '{:.5%}'.format(max_drawdown),"{:.5%}".format(max_return),p,n,
+                               len(c),'{:.2%}'.format(win_rate),
+                               '{:.2%}'.format(l_rate),total_gain,total_losses,total_gain+total_losses,len(new_df),edge]}
+        
         df = pd.DataFrame.from_dict(data)
         bpp  = self.splot/self.splot.shift(optimized_number) -1
         bpp.plot(label = 'Close_To_Close_Return')
-        return df.style.hide_index()   
+        return df.style.hide_index()
 
+    def model(self):
+
+        # Make the model
+        monthly_seasonality = True
+        model = fbprophet.Prophet(
+            daily_seasonality=False,
+            weekly_seasonality=False,
+            yearly_seasonality=True,
+            changepoint_prior_scale=0.05,
+            changepoints=None,)
+
+        if monthly_seasonality:
+            # Add monthly seasonality
+            model.add_seasonality(name='monthly', period=30.5, fourier_order=5)
+
+        return model
+    
+    def turningPoint(self, search=None):
+        matplotlib.rcdefaults()
+        matplotlib.rcParams['figure.figsize'] = (12, 7)
+        matplotlib.rcParams['axes.labelsize'] = 14
+        matplotlib.rcParams['xtick.labelsize'] = 12
+        matplotlib.rcParams['ytick.labelsize'] = 12
+        matplotlib.rcParams['axes.titlesize'] = 14
+        matplotlib.rcParams['text.color'] = 'k'
+        model = self.model()
+        train_data = self.new_datas
+        train_data['ds'] = train_data['Date']
+        min_date = min(train_data['Date'])
+        max_date = max(train_data['Date'])
+        years = 20
+        if 'Adj. Close' not in train_data.columns:
+            train_data['Adj. Close'] = train_data['Close']
+            train_data['Adj. Open'] = train_data['Open']
+
+        train_data['y'] = train_data['Adj. Close']
+        train_data['Daily Change'] = train_data['Adj. Close'] - train_data['Adj. Open']
+        # training years  = 20 years
+        train = train_data[train_data['Date']> (max_date - pd.DateOffset(years=years))]
+        model.fit(train)
+        future = model.make_future_dataframe(periods=0, freq='D')
+        future = model.predict(future)
+        train = pd.merge(train, future[['ds', 'yhat']], on='ds', how='inner')
+        changepoints = model.changepoints
+        train = train.reset_index(drop=True)
+        change_indices = []
+        for changepoint in changepoints:
+            change_indices.append(train[train['ds'] == changepoint].index[0])
+        c_data = train.loc[change_indices, :]
+        deltas = model.params['delta'][0]
+        c_data['delta'] = deltas
+        c_data['abs_delta'] = abs(c_data['delta'])
+        c_data = c_data.sort_values(by='abs_delta', ascending=False)
+        c_data = c_data[:10]
+        cpos_data = c_data[c_data['delta'] > 0]
+        cneg_data = c_data[c_data['delta'] < 0]
+        if not search:
+            plt.plot(train['ds'], train['y'], 'ko', ms=4, label='Stock Price')
+            plt.plot(future['ds'],future['yhat'],color='cyan',linewidth=2.0,label='Modeled',)
+
+            plt.vlines(cpos_data['ds'].dt.to_pydatetime(),ymin=min(train['y']),ymax=max(train['y']),linestyles='dashed',
+                color='r',linewidth=1.2,label='Negative Changepoints',)
+
+            plt.vlines(cneg_data['ds'].dt.to_pydatetime(),ymin=min(train['y']),ymax=max(train['y']),linestyles='dashed',
+                color='darkgreen',linewidth=1.2,label='Positive Changepoints',)
+
+            plt.legend(prop={'size': 10})
+            plt.xlabel('Date')
+            plt.ylabel('Price ($)')
+            plt.title('Stock Price with Changepoints')
+            plt.show()
+            print('\nChangepoints sorted by slope rate of change:\n')
+            return c_data.loc[:, ['Date', 'Adj. Close', 'delta']][:5].style.hide_index()
+
+        if search:
+            date_range = ['%s %s' % (str(min(train['Date'])), str(max(train['Date'])))]
+            trends, related_queries = self.retrieve_google_trends(search, date_range)
+            if (trends is None) or (related_queries is None):
+                print('No search trends found for %s' % search)
+                return
+            print('\n Top Related Queries: \n')
+            print(related_queries[search]["top"].head())
+            print('\n Rising Related Queries: \n')
+            print(related_queries[search]['rising'].head())
+            trends = trends.resample('D')
+            trends = trends.reset_index(level=0)
+            trends = trends.rename(columns={'date': 'ds', search: 'freq'})
+            trends['freq'] = trends['freq'].interpolate()
+            train = pd.merge(train, trends, on="ds", how='inner')
+            train['y_norm'] = train['y'] / max(train['y'])
+            train['freq_norm'] = train['freq'] / max(train['freq'])
+            self.reset_plot()
+            plt.plot(train['ds'], train['y_norm'], 'k-', label='Stock Price')
+            plt.plot(train['ds'],train['freq_norm'],color='goldenrod',label='Search Frequency',)
+            plt.vlines(cpos_data['ds'].dt.to_pydatetime(),ymin=0,ymax=1,linestyles='dashed',color='r',linewidth=1.2,
+                       label='Negative Changepoints',)
+
+            plt.vlines(cneg_data['ds'].dt.to_pydatetime(),ymin=0,ymax=1,linestyles='dashed',color='darkgreen',linewidth=1.2,
+                label='Positive Changepoints',)
+
+            plt.legend(prop={'size': 10})
+            plt.xlabel('Date')
+            plt.ylabel('Normalized Values')
+            plt.title('%s Stock Price and Search Frequency for %s' % (self.symbol, search))
+            plt.show()   
+    
 class Corranalyzer:
     
     def __init__(self, tickers):
@@ -210,7 +326,7 @@ class Corranalyzer:
         if len(self.tickers) > 1:
             self.tickers = tickers
         else:
-            print ("need more input")
+            print ('need more input')
             
         datacomp = web.DataReader(self.tickers,'yahoo', start = start, end = end)['Adj Close']
         self.pct_return = datacomp.pct_change()
@@ -244,9 +360,9 @@ class Corranalyzer:
 
         n = len(self.pct_return)
         risk_ranking = sorted(self.pct_return.std().items(), key=lambda item: item[1],reverse=True)
-        risk_ranking = pd.DataFrame(risk_ranking,columns=['Tickers', 'Risk'])
+        risk_ranking = pd.DataFrame(risk_ranking,columns=['Symbols', 'Risk'])
         return_ranking = sorted(self.pct_return.mean().items(), key=lambda item: item[1],reverse=True)
-        return_ranking = pd.DataFrame(return_ranking, columns=['Tickers', 'MeanReturn'])
+        return_ranking = pd.DataFrame(return_ranking, columns=['Symbols', 'MeanReturn'])
         sd = risk_ranking['Risk']/(n**0.5)
         return_ranking['SD_Error'] = sd
         ranking = pd.DataFrame.merge(risk_ranking,return_ranking)
@@ -266,7 +382,7 @@ class Corranalyzer:
                     total_gain = total_gain + x
             tuple = ([b.columns[ele],p,total_gain])
             tuplelist_gain.append(tuple)
-        tuplelist_gain = pd.DataFrame(tuplelist_gain,columns=['Tickers','WinDays','Profit'])
+        tuplelist_gain = pd.DataFrame(tuplelist_gain,columns=['Symbols','WinDays','Profit'])
 
         tuplelist_loss = []
         for ele in range(length):
@@ -280,8 +396,82 @@ class Corranalyzer:
                     total_losses = total_losses + x
             tuple = ([b.columns[ele],n,total_losses,total_days])
             tuplelist_loss.append(tuple)
-        tuplelist_loss = pd.DataFrame(tuplelist_loss,columns=['Tickers','LossDays','Loss','TotalDays'])
+        tuplelist_loss = pd.DataFrame(tuplelist_loss,columns=['Symbols','LossDays','Loss','TotalDays'])
         new_tablea = pd.DataFrame.merge(tuplelist_gain,tuplelist_loss)
         new_tablea['PnL'] = tuplelist_gain['Profit'] + tuplelist_loss['Loss']
         new_table = pd.DataFrame.merge(ranking,new_tablea)
-        return new_table
+#         print('Total Trading Days: ',len(b))
+        return new_table.style.hide_index()
+
+    def backtestStat(self):
+        def rolling_return(ticker): # Close to Close %
+            try:
+                stock = web.DataReader(ticker, 'yahoo', start, end)
+            except Exception as e:
+                print('Error Retrieving Data.')
+                print (e)
+                return
+            df_a = stock.reset_index(col_level=0)
+            df_a.rename(columns={'Date':'ds','Adj Close':'y'}, inplace=True)
+            df_a = df_a[['ds','y']]
+            new_df = df_a
+            a=[]
+            b=[]
+            for i in range(252):
+                b = new_df['y']/new_df['y'].shift(i+1) -1
+                c = b.iloc[1::i+1].mean()
+                d = b.iloc[1::i+1].std()
+                tuple = (i+1,c,d)
+                a.append(tuple)
+            a = sorted(a, key=lambda item: item[1],reverse=True)
+            optimized_number = [item[0] for item in a][0]
+            optimized_mean = [item[1] for item in a][0]
+            optimized_sd = [item[2] for item in a][0]
+        #         return optimized_sd
+            mean = optimized_mean
+            sd = optimized_sd
+            u_ban = mean + 1.96 * sd
+            l_ban = mean - 1.96 * sd
+
+            p = 0
+            total_gain = 0
+            d_return = new_df['y']/new_df['y'].shift(optimized_number) -1
+
+            for i in d_return.iloc[1::optimized_number]:
+                if i > 0:
+                    p = p + 1
+                    total_gain = total_gain + i
+            n = 0
+            total_losses = 0
+            for x in d_return.iloc[1::optimized_number]:
+                if x < 0:
+                    n = n + 1
+                    total_losses = total_losses + x
+            edge = []
+            if total_gain > abs(total_losses):
+                edge = 'Better Be a Buyer'
+            else:
+                edge = 'Better Be a Seller'
+
+            c = d_return.iloc[1::optimized_number]
+            win_rate = p / len(c)
+            l_rate = n / len(c)
+            max_drawdown = c.min()
+            max_return = c.max()
+            data = [ticker,optimized_number,'{:.5%}'.format(mean),'{:.5%}'.format(sd),'{:.5%}'.format(u_ban),
+                    '{:.5%}'.format(l_ban), '{:.5%}'.format(max_drawdown),'{:.5%}'.format(max_return),p,n,
+                    len(c),'{:.2%}'.format(win_rate),
+                    '{:.2%}'.format(l_rate),total_gain,total_losses,total_gain+total_losses,len(new_df),edge]
+            return data
+        c = []
+        for i in self.tickers:
+            tuple = rolling_return(i)
+            c.append(tuple)
+        b = pd.DataFrame(c,columns=['Symbols','Holding Periods','Mean Return','SD','Upper_Band','Lower_Band',
+                             'Max_drawdown','Max_gain','WinTrades','LossTrades',
+                      'TotalTrades','WinRate','LosingRate',
+                      'Total_gains','Total_losses','PnL','Total_Days','Edge'])
+
+        b = b.sort_values(by=['Mean Return'],ascending=False)
+        b.to_csv('backtest_output.csv',index=False)
+        return b.style.hide_index()
