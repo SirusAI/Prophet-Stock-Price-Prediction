@@ -1,14 +1,14 @@
 # Stock-Analysis-Tools
 Prophet Stock Price Prediction
 This information contained on this notebook and the resources avaiable for dowload through this website is not intended as, and shall not be understood or contruced as, financial advice!I developed this tool mainly to gain more experience in time series analysis and object-oriented programming. The goal is to combine different machine learning methods for stock analysis. I will occasionally update this project by adding more functions. (*** Stock historical price data is from Yahoo Finance)
-# Libraries for the project
+# Libraries for this project
 * [Pandas](https://pandas.pydata.org)
 * [Pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest)
 * [Datetime](https://docs.python.org/3/library/datetime.html)
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
 * [Matplotlib](https://matplotlib.org)
-# Results from the Prophet prediction
-## Single Stock Analysis
+# Examples
+## For Single Stock Analysis
 
 ```
 from metaprodictor import Prodictor
@@ -17,14 +17,6 @@ ticker = 'spy' # put your stock here
 days = 365 
 test_ticker = Prodictor(ticker) 
 ```
-### Example of Stock Trend Analysis
-
-```
-test_ticker.trend_analizer(365)
-```
-* Seasonal Trend
-
-![](image/Porphet_Trend_analysis.png)
 
 ### Example of Stocks Open To Close Return Stats Analysis
 
@@ -35,7 +27,7 @@ test_ticker.oTc_return()
 
 ![](image/opentoclosestat.png)
 
-* Open to Close Return (%) Chart
+* Open to Close Rate of Return (%) Chart
 
 ![](image/opentoclosechart.png)
 
@@ -48,7 +40,7 @@ test_ticker.cTc_return()
 
 ![](image/closetoclosestat.png)
 
-* Close to Close Return (%) Chart
+* Close to Close Rate of Return (%) Chart
 
 ![](image/closetoclosechart.png)
 
@@ -57,6 +49,8 @@ test_ticker.cTc_return()
 test_ticker.zTc_return(252)
 ```
 ![](image/bth.png)
+
+* Rate of Return (%) 
 
 ![](image/bthc.png)
 
@@ -78,8 +72,16 @@ test.turningPoint()
 
 ![](image/turningpoint.png)
 
+### Example of Stock Trend Analysis
 
-## Portfolio Analysis
+```
+test_ticker.trend_analizer(365)
+```
+* Seasonal Trend
+
+![](image/Porphet_Trend_analysis.png)
+
+## For Portfolio Analysis
 ### Correlation Matrix for Energy Stocks
 
 ![](image/CORRELATION.png)
