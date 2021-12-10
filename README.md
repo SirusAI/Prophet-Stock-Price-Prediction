@@ -18,6 +18,15 @@ days = 365
 test_ticker = Prodictor(ticker) 
 ```
 
+### Truning Point Analysis
+Apply Prophet and detects changepoints by first specifying a large number of potential changepoints at which the rate is allowed to change. It then puts a sparse prior on the magnitudes of the rate changes (equivalent to L1 regularization) - this essentially means that Prophet has a large number of possible places where the rate can change, but will use as few of them as possible. Consider the Peyton Manning forecast from the Quickstart. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series. The vertical lines in this figure indicate where the potential changepoints were placed: "https://facebook.github.io/prophet/docs/trend_changepoints.html" for detail
+```
+test.turningPoint()
+```
+
+![](image/turningpoint.png)
+
+
 ### Example of Stocks Open To Close Return Stats Analysis
 
 ```
@@ -53,15 +62,6 @@ test_ticker.zTc_return(252)
 * Rate of Return (%) 
 
 ![](image/bthc.png)
-
-
-### Truning Point Analysis
-Apply Prophet and detects changepoints by first specifying a large number of potential changepoints at which the rate is allowed to change. It then puts a sparse prior on the magnitudes of the rate changes (equivalent to L1 regularization) - this essentially means that Prophet has a large number of possible places where the rate can change, but will use as few of them as possible. Consider the Peyton Manning forecast from the Quickstart. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series. The vertical lines in this figure indicate where the potential changepoints were placed: "https://facebook.github.io/prophet/docs/trend_changepoints.html" for detail
-```
-test.turningPoint()
-```
-
-![](image/turningpoint.png)
 
 ### Example of Stock Trend Analysis
 
