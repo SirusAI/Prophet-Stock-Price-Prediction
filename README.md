@@ -84,6 +84,17 @@ highlight = 0.78 # highlight if correlation is greater than 0.78
 b = Corranalyzer(ticker_group)
 b.matrixCorrl(highlight)
 ```
+
+#### A simple way to transform symbol string like this 'DVN CLR MRO FANG CVE TRGP SSL EOG COP IMO' TO the list like this ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
+```
+a = 'DVN CLR MRO FANG CVE TRGP SSL EOG COP IMO'
+def transformer(string):
+  t_list = list(string.split(' '))
+  return t_list
+ticker_group = transformer(a)
+# and you will get your list out put, ticker_group = ['DVN','CLR','MRO','FANG','CVE','TRGP','SSL','EOG','COP','IMO']
+```
+
 ### Correlation Matrix for Energy Stocks
 
 ![](image/CORRELATION.png)
