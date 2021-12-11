@@ -14,7 +14,7 @@ This information contained on this notebook and the resources avaiable for dowlo
 from metaprodictor import Prodictor
 
 ticker = 'spy' # put your stock here
-days = 365 
+days = 365 # days for the trend analysis function
 test_ticker = Prodictor(ticker) 
 ```
 
