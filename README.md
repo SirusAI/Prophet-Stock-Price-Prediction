@@ -1,5 +1,5 @@
 # Stock-Analysis-Tools (Metaprodictor)
-Metaprodictor is a python base project that I develop to gain more experience in time series analysis and object-oriented programming.This information contained on this notebook and the resources avaiable for dowload through this website is not intended as, and shall not be understood or contruced as, financial advice! The goal is to combine different machine learning methods for stock analysis. I will occasionally update this project by adding more functions. (*** Stock historical price data generates from Yahoo Finance)
+Metaprodictor is a python base tool that I develop to gain more experience in time series analysis and object-oriented programming.This information contained on this notebook and the resources avaiable for dowload through this website is not intended as, and shall not be understood or contruced as, financial advice! The goal is to combine different machine learning methods for stock analysis. I will occasionally update this project by adding more functions. (*** Stock historical price data generates from Yahoo Finance)
 # Libraries for this project
 * [Pandas](https://pandas.pydata.org)
 * [Pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest)
