@@ -6,7 +6,7 @@ Metaprodictor is a python base tool that I develop to gain more experience in ti
 * [Datetime](https://docs.python.org/3/library/datetime.html)
 * [Prophet](https://facebook.github.io/prophet/docs/installation.html#installation-in-python)
 * [Matplotlib](https://matplotlib.org)
-# Examples
+# Examples of How to Use "metaprodictor" for Stock Analysis
 ## For Single Stock Analysis
 
 ```
